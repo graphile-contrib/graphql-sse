@@ -59,7 +59,7 @@ const GraphQLSSEPlugin: PostGraphilePlugin = {
     execute = graphql.execute;
     subscribe = graphql.subscribe;
 
-    return null;
+    return _;
   },
   pluginHook(postgraphilePluginHook) {
     return (pluginHook = postgraphilePluginHook);
