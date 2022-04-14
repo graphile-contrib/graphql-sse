@@ -36,10 +36,8 @@ postgraphile \
 import { postgraphile, makePluginHook } from 'postgraphile';
 import GraphQLSSEPlugin from '@graphile-contrib/graphql-sse';
 
-const pluginHook = makePluginHook([GraphQLSSEPlugin]);
-
 const postGraphileMiddleware = postgraphile(databaseUrl, 'app_public', {
-  pluginHook,
+  pluginHook: makePluginHook([GraphQLSSEPlugin]),
   eventStreamRoute: '/graphql/stream', // default
 });
 ```
