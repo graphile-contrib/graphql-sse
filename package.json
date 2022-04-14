@@ -1,5 +1,11 @@
 {
   "name": "graphql-sse",
   "description": "PostGraphile support for GraphQL over Server-Sent Events (SSE) powered by graphql-sse",
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.0",
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
 }
