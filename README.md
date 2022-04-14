@@ -20,7 +20,7 @@ or
 yarn add graphql-sse @graphile-contrib/graphql-sse
 ```
 
-### Use the plugin
+### Integrate the plugin
 
 ```ts
 import { postgraphile, makePluginHook } from 'postgraphile';
