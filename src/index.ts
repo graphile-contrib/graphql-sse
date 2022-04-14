@@ -45,7 +45,7 @@ let eventStreamRoute = '',
 // some callbacks of graphql-sse dont supply the response (like onNext)
 const resForReq = new Map<IncomingMessage, ServerResponse>();
 
-export const GraphQLSSEPlugin: PostGraphilePlugin = {
+const GraphQLSSEPlugin: PostGraphilePlugin = {
   init(_, { graphql }) {
     // copied from https://github.com/graphile/postgraphile/blob/55bff41460b113481c8161ef8f178f5af0a17df3/isTurbo.js
     const major = parseInt(process.version.replace(/\..*$/, ''), 10);
@@ -269,3 +269,5 @@ function addCORSHeaders(res: ServerResponse) {
     ['X-GraphQL-Event-Stream'].join(', '),
   );
 }
+
+export default GraphQLSSEPlugin;

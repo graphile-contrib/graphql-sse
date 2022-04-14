@@ -24,7 +24,7 @@ yarn add graphql-sse @graphile-contrib/graphql-sse
 
 ```ts
 import { postgraphile, makePluginHook } from 'postgraphile';
-import { GraphQLSSEPlugin } from '@graphile-contrib/graphql-sse';
+import GraphQLSSEPlugin from '@graphile-contrib/graphql-sse';
 
 const pluginHook = makePluginHook([GraphQLSSEPlugin]);
 
