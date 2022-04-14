@@ -2,8 +2,6 @@
 
 PostGraphile support for [GraphQL over Server-Sent Events (SSE)](https://github.com/enisdenjo/graphql-sse/blob/master/PROTOCOL.md) powered by [graphql-sse](https://github.com/enisdenjo/graphql-sse).
 
-Important takeways:
-
 - Doesn't mess with the schema update stream on `eventSourceRoute`, both can exist on the same route
 - `PUT` and `DELETE` methods are allowed through CORS on the `eventSourceRoute` in order to support the [HTTP/1 safe "single connection mode"](https://github.com/enisdenjo/graphql-sse/blob/master/PROTOCOL.md#single-connection-mode)
 - The client can use the `X-GraphQL-Event-Stream` header for SSE endpoint discovery
