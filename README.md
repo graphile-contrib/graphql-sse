@@ -22,6 +22,16 @@ yarn add graphql-sse @graphile-contrib/graphql-sse
 
 ### Integrate the plugin
 
+#### PostGraphile CLI
+
+```bash
+postgraphile \
+  --plugins @graphile/graphql-sse \
+  ...
+```
+
+#### PostGraphile library
+
 ```ts
 import { postgraphile, makePluginHook } from 'postgraphile';
 import GraphQLSSEPlugin from '@graphile-contrib/graphql-sse';
@@ -29,8 +39,8 @@ import GraphQLSSEPlugin from '@graphile-contrib/graphql-sse';
 const pluginHook = makePluginHook([GraphQLSSEPlugin]);
 
 const postGraphileMiddleware = postgraphile(databaseUrl, 'app_public', {
-  eventStreamRoute: '/graphql/stream', // default
   pluginHook,
+  eventStreamRoute: '/graphql/stream', // default
 });
 ```
 
