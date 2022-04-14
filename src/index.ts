@@ -163,6 +163,9 @@ const GraphQLSSEPlugin: PostGraphilePlugin = {
     const res = ctx.res as ServerResponse;
     const next = ctx.next as (err?: Error | 'route') => void;
 
+    // inform clients about where they can use the event-stream
+    res.setHeader('X-GraphQL-Event-Stream', eventStreamRoute);
+
     const url = new URL(req.url || '', `http://${req.headers.host}`);
     if (url.pathname !== eventStreamRoute) {
       return req;
