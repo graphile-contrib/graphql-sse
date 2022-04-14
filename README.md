@@ -36,6 +36,6 @@ const postGraphileMiddleware = postgraphile(databaseUrl, "app_public", {
 
 ### Use the client
 
-Connect to the specified `eventStreamRoute` (defaults to `/graphql/stream`).
+Connect to the specified `PostGraphileOptions.eventStreamRoute`.
 
 For further usage inspiration, please consult the [`graphql-sse` readme](https://github.com/enisdenjo/graphql-sse#readme).
