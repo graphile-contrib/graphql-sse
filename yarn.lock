@@ -5,9 +5,9 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"graphql-sse@workspace:.":
+"@graphile-contrib/graphql-sse@workspace:.":
   version: 0.0.0-use.local
-  resolution: "graphql-sse@workspace:."
+  resolution: "@graphile-contrib/graphql-sse@workspace:."
   dependencies:
     typescript: ^4.6.3
   languageName: unknown
