@@ -199,12 +199,9 @@ const GraphQLSSEPlugin: PostGraphilePlugin = {
       return req;
     }
 
-    if (options.enableCors)
-      addCORSHeaders(
-        // we use the node response (instead of PostGraphileResponse) because graphql-sse
-        // will append more headers down the read and flush them on its own
-        res,
-      );
+    if (options.enableCors) {
+      addCORSHeaders(res);
+    }
 
     // Just a CORS preflight check
     if (req.method === 'OPTIONS') {
