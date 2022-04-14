@@ -4,7 +4,6 @@
     "outDir": "./lib",
     "declaration": true,
     "target": "es2017",
-    "module": "es2015",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

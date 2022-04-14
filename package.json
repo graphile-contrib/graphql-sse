@@ -1,5 +1,6 @@
 {
   "name": "@graphile-contrib/graphql-sse",
+  "version": "1.0.0",
   "description": "PostGraphile support for GraphQL over Server-Sent Events (SSE) powered by graphql-sse",
   "keywords": [
     "sse",
@@ -17,12 +18,41 @@
     "type": "git",
     "url": "https://github.com/graphile-contrib/graphql-sse.git"
   },
+  "engines": {
+    "node": ">=12"
+  },
   "packageManager": "yarn@3.2.0",
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./lib/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "type-check": "tsc --noEmit",
-    "build:esm": "tsc --build"
+    "build:esm": "tsc -b tsconfig.esm.json && node scripts/esm-post-process.js",
+    "build:cjs": "tsc -b tsconfig.cjs.json",
+    "build": "yarn build:esm && yarn build:cjs",
+    "prepack": "yarn build"
+  },
+  "peerDependencies": {
+    "graphql-sse": "^1.1.0",
+    "postgraphile": "^4.12.9"
   },
   "devDependencies": {
+    "glob": "^8.0.1",
+    "graphql-sse": "^1.1.0",
+    "postgraphile": "^4.12.9",
+    "replacestream": "^4.0.3",
     "typescript": "^4.6.3"
   }
 }
