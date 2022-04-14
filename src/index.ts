@@ -90,7 +90,7 @@ export const GraphQLSSEPlugin: PostGraphilePlugin = {
 
     handler = createHandler<IncomingMessage, ServerResponse>({
       execute,
-      subscribe, // TODO: options.live ? liveSubscribe : subscribe
+      subscribe,
       validate(schema, document) {
         const validationErrors = validate(
           schema,
