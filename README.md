@@ -1,4 +1,4 @@
-# graphql-sse
+# @graphile-contrib/graphql-sse
 
 PostGraphile support for [GraphQL over Server-Sent Events (SSE)](https://github.com/enisdenjo/graphql-sse/blob/master/PROTOCOL.md) powered by [graphql-sse](https://github.com/enisdenjo/graphql-sse).
 
