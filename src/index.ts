@@ -5,6 +5,9 @@ import type {
   execute as graphqlExecute,
   subscribe as graphqlSubscribe,
   specifiedRules as graphqlSpecifiedRules,
+  ExecutionArgs,
+  ValidationRule,
+  DocumentNode,
 } from 'graphql';
 import type {
   CreateRequestHandlerOptions,
@@ -88,38 +91,24 @@ const GraphQLSSEPlugin: PostGraphilePlugin = {
       },
     );
 
+    // some values necessary for dynamic validation are not available in `validate` callback
+    const dynamicValidationRulesForDocument = new Map<
+      DocumentNode,
+      ValidationRule[]
+    >();
+
     handler = createHandler<IncomingMessage, ServerResponse>({
       execute,
       subscribe,
       validate(schema, document) {
-        const validationErrors = validate(
-          schema,
-          document,
-          staticValidationRules,
-        );
-        if (validationErrors.length) {
-          return validationErrors;
+        try {
+          return validate(schema, document, [
+            ...staticValidationRules,
+            ...(dynamicValidationRulesForDocument.get(document) || []),
+          ]);
+        } finally {
+          dynamicValidationRulesForDocument.delete(document);
         }
-
-        // TODO: implement if necessary
-        // // You are strongly encouraged to use
-        // // `postgraphile:validationRules:static` if possible - you should
-        // // only use this one if you need access to variables.
-        // const moreValidationRules = pluginHook('postgraphile:validationRules', [], {
-        //   options,
-        //   req,
-        //   res,
-        //   variables: variableValues,
-        //   operationName: operationName,
-        // });
-        // if (moreValidationRules.length) {
-        //   const moreValidationErrors = validate(schema, document, moreValidationRules);
-        //   if (moreValidationErrors.length) {
-        //     return moreValidationErrors;
-        //   }
-        // }
-
-        return [];
       },
       async onSubscribe(req, res, params) {
         const context = await withPostGraphileContextFromReqRes(
@@ -129,10 +118,8 @@ const GraphQLSSEPlugin: PostGraphilePlugin = {
           (context) => context,
         );
 
-        const schema = await getGraphQLSchema();
-
-        return {
-          schema,
+        const args: ExecutionArgs = {
+          schema: await getGraphQLSchema(),
           contextValue: context,
           operationName: params.operationName,
           document:
@@ -141,6 +128,29 @@ const GraphQLSSEPlugin: PostGraphilePlugin = {
               : params.query,
           variableValues: params.variables,
         };
+
+        // You are strongly encouraged to use
+        // `postgraphile:validationRules:static` if possible - you should
+        // only use this one if you need access to variables.
+        const dynamicValidationRules = pluginHook(
+          'postgraphile:validationRules',
+          [],
+          {
+            options,
+            req,
+            res,
+            variables: args.variableValues,
+            operationName: args.operationName,
+          },
+        );
+        if (dynamicValidationRules.length) {
+          dynamicValidationRulesForDocument.set(
+            args.document,
+            dynamicValidationRules,
+          );
+        }
+
+        return args;
       },
       async onNext(req, _args, result) {
         if (result.errors) {
