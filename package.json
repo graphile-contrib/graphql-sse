@@ -19,7 +19,8 @@
   },
   "packageManager": "yarn@3.2.0",
   "scripts": {
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "build:esm": "tsc --build"
   },
   "devDependencies": {
     "typescript": "^4.6.3"
