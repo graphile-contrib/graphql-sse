@@ -1,0 +1,5 @@
+{
+  "name": "graphql-sse",
+  "description": "PostGraphile support for GraphQL over Server-Sent Events (SSE) powered by graphql-sse",
+  "packageManager": "yarn@3.2.0"
+}
